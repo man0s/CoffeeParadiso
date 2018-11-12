@@ -1,0 +1,51 @@
+<% include partials/header %>
+
+
+<div id="parallax-history-img" class="parallax">
+</div>
+
+<% if (error.length) { %>
+    <div class="flash">
+        <div class="alert alert-danger" role="alert"> <%= error %> </div>
+    </div>
+<% } else if (success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success" role="alert"> <%= success %> </div>
+    </div>
+<% } %>
+
+<div class="container">
+    <div><h1 style="margin-bottom: 0;">Ιστορικό Παραγγελιών</h1></div>
+    <hr style="margin-top: 5px; margin-bottom: 0px;">
+    <div class="row">
+        <br>
+        <div class="col-md-8 col-md-offset-2">
+            <% if(orders.length >= 1) { %>
+                <% for(var i = orders.length - 1; i >= 0; i--) { %>
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding: 10px;">
+                                <% orders[i].items.forEach(function(item){ %>
+                                    <li class="list-group-item">
+                                        <span class="badge" style="background-color: #555"><%= item.price %></span>
+                                        <b><%= item.qty %>x</b> <%= item.item.name %>
+                                    </li>
+                                <% }); %>
+                        </div>
+                        <div class="panel-footer history_total">
+                            <b>Σύνολο: <%= orders[i].cart.totalPrice %>€</b>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } else { %>
+                    <div class="panel panel-default" style="padding: 10px;">
+                                            <img src="https://i.imgur.com/OfYAxsQ.gif"><br><br>
+                                            Ακόμη δεν παρήγγειλες; Τι περιμένεις!<br><br>
+                                            <a href="/menu" type="button" class="btn button-color">Κατάλογος</a>
+                                            
+                     </div>
+                <% } %>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

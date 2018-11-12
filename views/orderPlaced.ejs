@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+
+<div id="parallax-steps-img" class="parallax">
+</div>
+
+<% if (error.length) { %>
+    <div class="flash">
+        <div class="alert alert-danger" role="alert"> <%= error %> </div>
+    </div>
+<% } else if (success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success" role="alert"> <%= success %> </div>
+    </div>
+<% } %>
+
+<div class="container">
+    <div><h1 style="margin-bottom: 0;">H παραγγελία σας καταχωρήθηκε.</h1></div>
+    <h3>Ο κοιμησμένος την αναμονή δεν την φοβάται!</h3>
+        <hr>
+    <iframe width="75%" height="420" src="https://www.youtube.com/embed/ATJEtKOYkRc?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+<hr>
+
+<% include partials/footer %>

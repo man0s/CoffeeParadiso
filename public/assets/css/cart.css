@@ -1,0 +1,179 @@
+.modal-open {
+    overflow: auto;
+    padding-right: 0px !important;
+}
+
+#kalathi {
+	margin-top: 80px;
+	height: calc(100% - 80px);
+	overflow-y: hidden;
+}
+
+	.modal.right .modal-dialog {
+		overflow-y: auto;
+		position: absolute;
+		margin: auto;
+		width: 420px;
+		-webkit-transform: translate3d(25%, 0, 0);
+		    -ms-transform: translate3d(25%, 0, 0);
+		     -o-transform: translate3d(25%, 0, 0);
+		        transform: translate3d(25%, 0, 0);
+	}
+
+	.modal.right .modal-body {
+	    /*padding: 20px;*/
+	    padding: 6px 26px 16px 1px;
+	    width: 80%;
+	    height: calc(100% - 80px);
+	}
+	
+	.modal.right.fade .modal-dialog {
+		right: -320px;
+		-webkit-transition:.25s ease-in-out;
+		-moz-transition:.25s ease-in-out;
+		-ms-transition:.25s ease-in-out;
+		-o-transition:.25s ease-in-out;
+		transition: .25s ease-in-out;
+		height: 100%;  /* modal smooth transition */
+	}
+	
+	.modal.right.fade.in .modal-dialog {
+		right: 0;
+		height: 100%;
+	}
+	
+	.modal-content {
+		height: 100%;
+	}
+	.modal-body .cartEmptyBody{
+        height: 75%;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+/* ----- MODAL STYLE ----- */
+	.modal-content {
+		border-radius: 0;
+		border: none;
+	}
+
+	.modal-header {
+		border-bottom-color: #EEEEEE;
+		background-color: #FAFAFA;
+	}
+	
+	.cart-close-margin {
+		margin-right: 102px;
+	}
+	
+	.cart-close {
+	  font-size: 26px;
+	  outline: none !important;
+	}
+	
+	#cutleryIcon{
+        font-size: 100px;
+        color: #f6f1ed;
+    }
+    
+    .cartItemCol{
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+}
+.cartItemQty{
+    padding-left: 0px;
+    font-size: 17px;
+    color: #7c7d7c;
+}
+.cartItemClose{
+    margin-top: -3px;
+    text-decoration: none;
+    font-size: 22px;
+    color: #555555;
+    display: flex;
+    transition: 0.5s;
+}
+
+.cartItemClose:hover {
+	text-decoration: none;
+}
+
+.modal-body-scroll{
+  	direction: rtl;
+  	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: calc(100% - 45px);
+}
+
+.modal-body-body {
+	direction: ltr;
+	padding: 0 0 0 5px;
+}
+/* ----- CART STYLE ----- */
+
+.cart-row {
+	margin: 5px -15px;
+}
+
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: 50px;
+}
+
+.label-success {
+    /*background-color: rgb(117, 86, 56);*/
+    background-color: rgb(221, 129, 13);
+    padding: 4px 8px;
+}
+
+.cart-button-style {
+  border: none;
+  border-radius: 0.25em;
+  color: white;
+  background-color: rgb(117, 86, 56);
+}
+
+.cart-button-style:hover {
+  color: white;
+  background-image: linear-gradient(to top, rgb(117, 86, 56), rgb(168, 107, 48));
+}
+
+.btn-qty-cart {
+    color: #505050;
+}
+
+.btn-qty-cart:hover {
+  color: #232323;
+}
+
+.fullprice {
+	position: absolute;
+	left: 0;
+	right: 0;
+    bottom: 0;
+    padding: 0px 60px 0px 40px;
+    font-size: 18px;
+}
+
+.noscroll { 
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 767px){
+  #kalathi {
+		margin-top: 86px;
+		height: calc(100% - 86px);
+		overflow-y: hidden;
+	}
+	.modal.right .modal-body {
+	    /*padding: 20px;*/
+	    padding: 6px 26px 16px 1px;
+	    width: 80%;
+	    height: calc(100% - 86px);
+	}
+}

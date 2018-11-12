@@ -1,0 +1,167 @@
+<% include partials/header_checkout %>
+
+
+<div id="parallax-steps-img" class="parallax">
+</div>
+
+<% if (error.length) { %>
+    <div class="flash">
+        <div class="alert alert-danger" role="alert"> <%= error %> </div>
+    </div>
+<% } else if (success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success" role="alert"> <%= success %> </div>
+    </div>
+<% } %>
+    
+    <div class="container">
+      <div><h1 style="margin-bottom: 0;">Παραγγελία</h1></div>
+      <hr style="margin-top: 5px; margin-bottom: 0px;">
+      <div class="row">
+              <div class="col-md-4 order-md-2">
+          <h4>
+            <br>
+            <span class="text-muted">Καλάθι</span>
+            <span style="margin-bottom: 3px;" class="badge badge-secondary badge-pill"><%= session.cart.totalQty %></span>
+          </h4>
+          <ul class="list-group">
+              <% cartItems.forEach(function(product){ %>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h5><b><%= product.item.name %> (<%= product.qty %>)</b></h5>
+                    <span class="text-muted"><%= product.price %>€</span>
+                  </div>
+                </li>
+              <% }); %>
+            
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Σύνολο: </span>
+              <strong><%= session.cart.totalPrice %>€</strong>
+            </li>
+          </ul>
+          <a href="/menu" tabindex="1" type="button" class="btn button-color-checkout">Επιστροφή στον Κατάλογο</a>
+        </div>
+        
+        <div class="col-md-8">
+          <br>
+          <h4>Διεύθυνση Παράδοσης</h4>
+          <form action="/checkout" method="POST">
+            <div class="col-md-6 address_margin">
+                <label for="firstName">Όνομα</label>
+                <input type="text" class="form-control" name="firstName" placeholder="Όνομα" value="" required>
+              </div>
+              <div class="col-md-6 address_margin">
+                <label for="lastName">Επώνυμο</label>
+                <input type="text" class="form-control" name="lastName" placeholder="Επώνυμο" value="" required>
+              </div>
+              <br>
+            <div class="form-group address_margin">
+              <label for="address">Διεύθυνση</label>
+              <input type="text" class="form-control" name="address" id="location_input" maxlength="100" placeholder="Οδός & Αριθμός" required>
+              <input type="hidden" class="form-control" name="latitude">
+              <input type="hidden" class="form-control" name="longitude">
+              <div id="map_check"></div>
+            </div>
+            <hr>
+            <button class="btn btn-success btn-lg btn-block btn_complete" type="submit">Ολοκλήρωση Παραγγελίας</button>
+          </form>
+        </div>
+      </div>
+    <br>
+    </div>
+</div>
+<hr>
+    
+<script>
+//========================================
+//           autoComplete Map
+//========================================
+// Initialize and add the map
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map_check'), {
+      center: {
+        lat: 38.2467692,
+        lng: 21.7226867
+      },
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+              disableDefaultUI: true
+    });
+    var input = /** @type {!HTMLInputElement} */ (
+      document.getElementById('location_input'));
+  
+    var types = document.getElementById('type-selector');
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+  
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+  
+    var infowindow = new google.maps.InfoWindow();
+    var marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      draggable: true
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+      
+      document.getElementsByName('latitude')[0].value = marker.getPosition().lat();
+      document.getElementsByName('longitude')[0].value = marker.getPosition().lng();
+       
+       infowindow.setContent('<i class="fa fa-map-marker"></i> <strong>' + "Νέα τοποθεσία" + '</strong><br>' + marker.getPosition().lat().toFixed(6) + ", " + marker.getPosition().lng().toFixed(6));
+       infowindow.open(map, marker);
+    })
+  
+    autocomplete.addListener('place_changed', function() {
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+      }
+  
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
+      }
+      marker.setIcon( ({
+        url: '/assets/img/map/coffee_pin.png',
+        scaledSize: new google.maps.Size(35, 35)
+      }));
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+  
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+  
+      var latitude = place.geometry.location.lat();
+      var longitude = place.geometry.location.lng();
+      
+      document.getElementsByName('latitude')[0].value = latitude;
+      document.getElementsByName('longitude')[0].value = longitude;
+  
+  
+      infowindow.setContent('<div><i class="fa fa-map-marker"></i> <strong>' + place.name + '</strong><br>' + address);
+      infowindow.open(map, marker);
+    });
+  
+  }
+</script>
+
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoWKJrVl9P97JSP3cfqswCGsfrgS5ve2Q&libraries=places&callback=initMap"></script>
+
+<% include partials/footer %>

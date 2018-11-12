@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="modal fade modal-product" id="<%= product._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header menu-modal-header-padding">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel"><strong><%= product.name %></strong></h5>
+            </div>
+            <div class="modal-body menu-img">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12"><img src="<%= product.image %>"></div>
+                    </div>
+                    <hr class="menu-hr">
+                    <%= product.desc %>
+                </div>
+            </div>
+            <div class="modal-footer menu-modal-footer">
+                <span class="quantity-span" style="float: left;">
+                                <a onclick="modify_qty(-1,'<%= product._id %>')"><i class="fa fa-minus fa-2x btn-qty noSelect" aria-hidden="true"></i></a>
+                                <span><input id="qty_'<%= product._id %>'" class="qtyInput" value="1"  disabled /></span>
+                                <a onclick="modify_qty(1,'<%= product._id %>')"><i class="fa fa-plus fa-2x btn-qty noSelect" aria-hidden="true"></i></a>
+                 </span>
+               <a tabindex="1" id="btnAdd_'<%= product._id %>'" href="/cart/add/<%= product._id %>/1/false" class="btn btn-md menu-button-style" price='<%= product.price.toFixed(2) %>' style="float: right;">Προσθήκη <%= product.price.toFixed(2) %>€</a>
+            </div>
+        </div>
+    </div>
+</div>

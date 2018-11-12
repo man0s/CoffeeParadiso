@@ -1,0 +1,53 @@
+<% include partials/header %>
+
+<div id="parallax-menu-img" class="parallax">
+</div>
+
+
+<% if (error.length) { %>
+    <div class="flash">
+        <div class="alert alert-danger" role="alert"> <%= error %> </div>
+    </div>
+<% } else if (success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success" role="alert"> <%= success %> </div>
+    </div>
+<% } %>
+
+<div class="container">
+    <div><h1 style="margin-bottom: 0;">Online Κατάλογος</h1></div>
+    <hr style="margin-top: 5px; margin-bottom: 0px;">
+    <div class="row">
+        <ul>
+            <li class="col-sm-6 col-xs-12">
+                <h2>Καφέδες</h2>
+                <ul>
+                    <% products.forEach(function(product){ %>
+                        <% if(product.type === "drink"){ %>
+                            <li class="well well_menu" data-toggle="modal" data-target="#<%= product._id %>">
+                                <span class="product_name"><strong><%= product.name %></strong></span><button type="button" class="btn btn-sm btn_green" ><%= product.price.toFixed(2) %>€</button>
+                            </li>
+                            <% include partials/product_modal %>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            </li>
+            <li class="col-sm-6 col-xs-12">
+                <h2>Μικρά γεύματα</h2>
+                <ul>
+                    <% products.forEach(function(product){ %>
+                        <% if(product.type === "food"){ %>
+                            <li class="well well_menu" data-toggle="modal" data-target="#<%= product._id %>">
+                                <span class="product_name"><strong><%= product.name %></strong></span><button type="button" class="btn btn-sm btn_green" ><%= product.price.toFixed(2) %>€</button>
+                            </li>
+                            <% include partials/product_modal %>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<% include partials/footer %>

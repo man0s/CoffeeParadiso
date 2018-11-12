@@ -1,0 +1,364 @@
+<% include partials/header_panel %>
+
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-3 profile-sidebar">
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						Πίνακας Ελέγχου
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active delivery_home">
+							<a href="#"><i class="fa fa-dashboard "></i>Αρχική </a>
+						</li>
+						<li class="delivery_info">
+							<a href="#info"><i class="fa fa-info-circle "></i>Πληροφόρηση </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+		</div>
+		<div class="col-md-9 profile-content">
+			   <div id="delivery_home_content">
+			        <% if (deliveryman.active === false) { %>
+			                <form action="/deliveryman/shift" method="POST">
+    			                <div class="form-group address_margin">
+    			                  <br>
+                                  <label for="address">Τοποθεσία</label>
+                                  <input type="text" class="form-control" name="address" id="location_input" maxlength="100" placeholder="Οδός & Αριθμός" required>
+                                  <input type="hidden" class="form-control" id="latitude" name="latitude">
+                                  <input type="hidden" class="form-control" id="longitude" name="longitude">
+                                  <input type="hidden" class="form-control" name="active" value="true">
+                                  <div id="map_check"></div>
+                                </div>
+                                <hr>
+    			                <button type="submit" class="btn btn-warning btn-lg btn-block btn-responsive">Έναρξη Βάρδιας</button>
+    			            </form>
+    			    <% } else { %>
+    			           <h2>Στοιχεία Παραγγελίας</h2>
+    			           <hr>
+    			           <div id="order_content">
+      			            <input id="location_input"  type="hidden">    
+      			            <div id="map_check" hidden></div>          
+    			           </div>
+
+			        <% } %>
+			            </div>
+			   <div id="delivery_info_content">
+			       <h2>Πληροφορίες Ημέρας</h2>
+			       <hr><br><br><br>
+			       
+                        <div class="col-lg-4 col-12">
+                          <div class="card border-0"  style="padding-bottom: 25px">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="media d-flex">
+                                  <div class="media-body">
+                                    <h1 id="misthos" class="display-4"></h1>
+                                    <span class="text-muted">Αμοιβή</span>
+                                  </div>
+                                  <div class="align-self-center">
+                                    <i class="icon-graph font-large-2 blue-grey lighten-3"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                          <div class="card border-0"  style="padding-bottom: 25px">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="media d-flex">
+                                  <div class="media-body">
+                                    <h1 id="completed" class="display-4"></h1>
+                                    <span class="text-muted">Διαδρομές</span>
+                                  </div>
+                                  <div class="align-self-center">
+                                    <i class="icon-graph font-large-2 blue-grey lighten-3"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                          <div class="card border-0"  style="padding-bottom: 25px">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="media d-flex">
+                                  <div class="media-body">
+                                    <h1 id="km" class="display-4"></h1>
+                                    <span class="text-muted">Χιλιόμετρα</span>
+                                  </div>
+                                  <div class="align-self-center">
+                                    <i class="icon-graph font-large-2 blue-grey lighten-3"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>                        
+			       
+			   </div>
+            </div>
+		</div>
+	</div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+      
+      var currentHash = window.location.href.slice(window.location.href.indexOf('#') + 1);
+        if(currentHash == 'info')
+        {
+            $(".delivery_home").removeClass( "active" );
+            $(".delivery_info").addClass( "active" );
+            $("#delivery_home_content").hide();
+            $("#delivery_info_content").show();
+        } else {
+            $(".delivery_info").removeClass( "active" );
+            $(".delivery_home").addClass( "active" );
+            $("#delivery_info_content").hide();
+            $("#delivery_home_content").show();
+        }
+    
+    $(".delivery_home").click(function(){
+        $(".delivery_info").removeClass( "active" );
+        $(".delivery_home").addClass( "active" );
+        $("#delivery_info_content").hide();
+        $("#delivery_home_content").show();
+    });
+    
+     $(".delivery_info").click(function(){
+        $(".delivery_home").removeClass( "active" );
+        $(".delivery_info").addClass( "active" );
+        $("#delivery_home_content").hide();
+        $("#delivery_info_content").show();
+    });
+
+});
+</script>
+
+<script>
+    showInfo();
+    makeList();
+    var myMarker = setInterval(makeList, 3000);
+    function makeList() {
+        return $.ajax({
+            'url': "/deliveryman/getOrder",
+        }).then(function(order) {
+          if(order)
+            {
+              if(order.delivered == false){
+                clearInterval(myMarker); 
+                $("#order_content").html("<div class='col-md-12'><div id='ordercont' class='panel panel-default panel-order'></div></div>");
+                $("#ordercont").append("<div class='panel-body'><div class='row'><div class='col-md-12' style='padding: 5px'><span style='font-size: 18px'><i class='fa fa-coffee' aria-hidden='true'></i><b> " + order.store.store.name + "</b> (" + order.store.store.address + ")</span><br><span><i class='fa fa-user-circle-o' aria-hidden='true'></i> " + order.firstName + " " + order.lastName +" <span class='label label-info' style='font-size: 10px;vertical-align: 3px;'><i class='fa fa-phone' aria-hidden='true'></i> "+ order.phoneNumber + "</span><br><i class='fa fa-map-marker' aria-hidden='true'></i> " + order.address + "</span><br>Σύνολο: " + order.cart.totalPrice + "€<br></div></div></div>");
+                $("#order_content").append("<div class='col-md-12'><div id='map_canvas'></div><hr><div id='button_content'></div></div>");
+                mapLocation(order.store.store.location.lat, order.store.store.location.lng, order.location.lat, order.location.lng);
+                $("#button_content").append("<form action='/deliveryman/success' method='POST'><button type='submit' class='btn btn-success btn-lg btn-block btn-responsive'>Ολοκλήρωση Παράδοσης</button></form><br></div>");
+              } else  $("#order_content").html("<div class='panel panel-default'> <li style='border: 0'  class='list-group-item'> Δεν υπάρχει ακόμα καμία εκκρεμής παράδοση!</li></div><form action='/deliveryman/shift' method='POST'><div class='form-group address_margin'><br><input type='hidden' class='form-control' name='active' value='false'></div><hr><button type='submit' class='btn btn-danger btn-lg btn-block btn-responsive'>Λήξη Βάρδιας</button></form>");
+            } else {
+               $("#order_content").html("<div class='panel panel-default'> <li style='border: 0' class='list-group-item'> Δεν υπάρχει ακόμα καμία εκκρεμής παράδοση!</li></div><form action='/deliveryman/shift' method='POST'><div class='form-group address_margin'><br><input type='hidden' class='form-control' name='active' value='false'></div><hr><button type='submit' class='btn btn-danger btn-lg btn-block btn-responsive'>Λήξη Βάρδιας</button></form>");
+              
+            }
+        });
+    }
+    function showInfo() {
+        return $.ajax({
+            'url': "/deliveryman/getInfo"
+        }).then(function(results) {
+            if(results)
+            {
+                $("#misthos").html(results.salary.toFixed(2) + "€");
+                $("#completed").html(results.deliveries);
+                $("#km").html(results.dist.toFixed(2));
+            } else {
+                console.log("Can not retrieve deliveryman's info right now!");
+            }
+        });
+    }
+</script>
+
+<script>
+//========================================
+//           autoComplete Map
+//========================================
+// Initialize and add the map
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map_check'), {
+      center: {
+        lat: 38.2467692,
+        lng: 21.7226867
+      },
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+              disableDefaultUI: true
+    });
+    
+    var input = /** @type {!HTMLInputElement} */ (
+      document.getElementById('location_input'));
+  
+    var types = document.getElementById('type-selector');
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+  
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+  
+    var infowindow = new google.maps.InfoWindow();
+    var marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      draggable: true
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+      
+      document.getElementsByName('latitude')[0].value = marker.getPosition().lat();
+      document.getElementsByName('longitude')[0].value = marker.getPosition().lng();
+       
+       infowindow.setContent('<i class="fa fa-map-marker"></i> <strong>' + "Νέα τοποθεσία" + '</strong><br>' + marker.getPosition().lat().toFixed(6) + ", " + marker.getPosition().lng().toFixed(6));
+       infowindow.open(map, marker);
+    })
+  
+    autocomplete.addListener('place_changed', function() {
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+      }
+  
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
+      }
+      marker.setIcon( ({
+        url: '/assets/img/map/delivery_pin.png',
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+      }));
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+  
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+  
+      var latitude = place.geometry.location.lat();
+      var longitude = place.geometry.location.lng();
+      
+      document.getElementsByName('latitude')[0].value = latitude;
+      document.getElementsByName('longitude')[0].value = longitude;
+  
+  
+      infowindow.setContent('<div><i class="fa fa-map-marker"></i> <strong>' + place.name + '</strong><br>' + address);
+      infowindow.open(map, marker);
+    });
+  
+  }
+</script>
+
+<script>
+		function mapLocation(storeLat, storeLng, customerLat, customerLng) {
+		    var directionsDisplay;
+		    var directionsService = new google.maps.DirectionsService();
+		    //var infowindowstart = new google.maps.InfoWindow();
+		    //var infowindowend = new google.maps.InfoWindow();
+		    var map;
+
+		        directionsDisplay = new google.maps.DirectionsRenderer();
+		        var mapOptions = {
+		            zoom: 5,
+		            center: {
+				        lat: 38.2467692,
+				        lng: 21.7226867
+				      }
+		        };
+		        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+		        directionsDisplay.setMap(map);
+		        calcRoute(storeLat, storeLng, customerLat, customerLng);
+
+		    function calcRoute(storeLat, storeLng, customerLat, customerLng) {
+		        var start = new google.maps.LatLng(storeLat, storeLng);
+		        var end = new google.maps.LatLng(customerLat, customerLng);;
+
+		var startMarker = new google.maps.Marker({
+		            position: start,
+		            map: map,
+		            title: 'startMarker',
+		            draggable: false
+		        });
+					startMarker.setIcon( ({
+			        url: '/assets/img/map/coffee_pin.png',
+			        scaledSize: new google.maps.Size(35, 35)
+			      }));
+		        var endMarker = new google.maps.Marker({
+		            position: end,
+		            map: map,
+		            title: 'endMarker',
+		            draggable: false
+		        });
+		        endMarker.setIcon( ({
+			        url: '/assets/img/map/delivery_pin.png',
+			        scaledSize: new google.maps.Size(35, 35)
+			      }));
+
+			   // infowindowstart.setContent('startMarker');
+      // 			infowindowstart.open(map, startMarker);
+
+			   // infowindowend.setContent('endMarker');
+      // 			infowindowend.open(map, endMarker);
+
+		
+		        var bounds = new google.maps.LatLngBounds();
+		        bounds.extend(start);
+		        bounds.extend(end);
+		        map.fitBounds(bounds);
+		        var request = {
+		            origin: start,
+		            destination: end,
+		            travelMode: 'DRIVING'
+		        };
+		        directionsService.route(request, function (response, status) {
+		            if (status == google.maps.DirectionsStatus.OK) {
+		                directionsDisplay.setDirections(response);
+		                directionsDisplay.setMap(map);
+		                directionsDisplay.setOptions( { suppressMarkers: true } );
+		            } else {
+		                alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+		            }
+		        });
+		    }
+		}
+	</script>
+
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoWKJrVl9P97JSP3cfqswCGsfrgS5ve2Q&libraries=places&callback=initMap"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<% include partials/header %>
+
+<div id="parallax-stores-img" class="parallax"></div>
+
+<% if (error.length) { %>
+    <div class="flash">
+        <div class="alert alert-danger" role="alert"> <%= error %> </div>
+    </div>
+<% } else if (success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success" role="alert"> <%= success %> </div>
+    </div>
+<% } %>
+
+<div class="container">
+	<div class="welcome"><h1>Καταστήματα</h1></div>
+	<hr style="margin-top: 5px; margin-bottom: 10px;">
+	<div class="row">
+		<div class="col-sm-6 col-xm-12">
+			<div class="col-centered">
+			  <select id="selection" class="form-control">
+				  <option selected>Όλα τα καταστήματα</option>
+				  <% stores.forEach(function(store){ %>
+				  	<option class="store" id="<%= store._id %>"><%= store.name.slice(15) %></option>
+				  <% }); %>
+			 </select>
+			 <br>
+			 <div class="well" style="box-shadow:none;">
+			 	<div id="storeInfo"></div>
+			 	<p><i class="fa fa-clock-o"></i>  Ωράριο λειτουργίας:<br>ΔΕ: 06:30 - 23:59<br>ΤΡ: 06:30 - 23:59<br>ΤΕ: 06:30 - 23:59<br>ΠΕ: 06:30 - 23:59<br>ΠΑ: 06:30 - 23:59<br>ΣΑ: 07:00 - 23:59<br>ΚΥ: 08:00 - 23:59</p>
+			 </div>
+			 <br>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xm-12">
+			<div id="resultMap" class="col-centered">
+				<iframe class="map" src="https://www.google.com/maps/d/embed?mid=1NGnpc-zQH9CTkXFUoP9ONLz5ZkOLPWgV"></iframe>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+
+<% include partials/footer %>

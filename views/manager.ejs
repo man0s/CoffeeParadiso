@@ -1,0 +1,229 @@
+<% include partials/header_panel %>
+<div class="container">
+	<div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						Πίνακας Ελέγχου
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active manager_home">
+							<a href="#">
+								<i class="fa fa-dashboard "></i>Αρχική 
+							</a>
+						</li>
+						<li class="manager_products">
+							<a href="#apothema">
+								<i class="fa fa-shopping-bag "></i>Απόθεμα 
+							</a>
+						</li>
+						<li class="manager_orders">
+							<a href="#orders" onclick="makeList()">
+								<i class="fa fa-random"></i>Παραγγελίες 
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+		<div class="col-md-9">
+		    <% if (error.length) { %>
+                <div id="flash_manager">
+                    <div class="alert alert-danger" role="alert"> <%= error %> </div>
+                </div>
+            <% } else if (success.length) { %>
+                <div id="flash_manager">
+                    <div class="alert alert-success" role="alert"> <%= success %> </div>
+                </div>
+            <% } %>
+			<div style="padding: 5px;" class="profile-content">
+				<div id="manager_home_content">
+					<h1><%= store.name %>
+					</h1>
+					<hr><br><br><br>
+					    <div class="col-lg-6 col-12">
+                          <div class="card border-0"  style="padding-bottom: 25px">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="media d-flex">
+                                  <div class="media-body">
+                                    <h1 id="tziros" class="display-4"></h1>
+                                    <span class="text-muted">Τζίρος</span>
+                                  </div>
+                                  <div class="align-self-center">
+                                    <i class="icon-graph font-large-2 blue-grey lighten-3"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                          <div class="card border-0" style="padding-bottom: 25px">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="media d-flex">
+                                  <div class="media-body">
+                                    <h1 id="misthos" class="display-4"></h1>
+                                    <span class="text-muted">Μισθός</span>
+                                  </div>
+                                  <div class="align-self-center">
+                                    <i class="icon-graph font-large-2 blue-grey lighten-3"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                            
+							</div>
+							<div id="manager_products_content">
+								<h2>Αποθέματα</h2>
+								<hr><% store.product.forEach(function(product, i){ %>
+									<form action="/manager/updateqty" method="POST">
+										<div class="col-md-6">
+											<div class="form-group">
+												<div class="input-group">
+													<span style="min-width: 100px;" class="input-group-addon"><%= product.name %>
+													</span>
+													<input type="number" name="quantity" class="form-control" min="0" value="<%= product.quantity %>">
+														<input type="hidden" name="name" class="form-control" value="<%= product.name %>">
+															<div class="input-group-btn">
+																<button type="submit" class="btn btn-success">
+																	<i class="fa fa-check" aria-hidden="true"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form><% }); %>
+										</div>
+										<div id="manager_pending_orders_content">
+											<h2>Παραγγελίες</h2>
+											<hr>
+												<div id="order_list"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+</div>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+        var currentHash = window.location.href.slice(window.location.href.indexOf('#') + 1);
+        if(currentHash == 'apothema')
+        {
+            $(".manager_home").removeClass( "active" );
+            $(".manager_orders").removeClass( "active" );
+            $(".manager_products").addClass( "active" );
+            $("#manager_home_content").hide();
+            $("#manager_pending_orders_content").hide();
+            $("#manager_products_content").show();
+        } else if (currentHash == 'orders') {
+            makeList();
+            $(".manager_home").removeClass( "active" );
+            $(".manager_products").removeClass( "active" );
+            $(".manager_orders").addClass( "active" );
+            $("#manager_home_content").hide();
+            $("#manager_products_content").hide();
+            $("#manager_pending_orders_content").show();    
+        } else {
+            $(".manager_orders").removeClass( "active" );
+            $(".manager_products").removeClass( "active" );
+            $(".manager_home").addClass( "active" );
+            $("#manager_pending_orders_content").hide();
+            $("#manager_products_content").hide();
+            $("#manager_home_content").show();
+        }
+        
+        
+    $(".manager_home").click(function(){
+        $(".manager_orders").removeClass( "active" );
+        $(".manager_products").removeClass( "active" );
+        $(".manager_home").addClass( "active" );
+        $("#flash_manager").hide();
+        $("#manager_pending_orders_content").hide();
+        $("#manager_products_content").hide();
+        $("#manager_home_content").show();
+    });
+    
+     $(".manager_products").click(function(){
+        $(".manager_home").removeClass( "active" );
+        $(".manager_orders").removeClass( "active" );
+        $(".manager_products").addClass( "active" );
+        $("#flash_manager").show();
+        $("#manager_home_content").hide();
+        $("#manager_pending_orders_content").hide();
+        $("#manager_products_content").show();
+    });
+    
+    $(".manager_orders").click(function(){
+        $(".manager_home").removeClass( "active" );
+        $(".manager_products").removeClass( "active" );
+        $(".manager_orders").addClass( "active" );
+        $("#flash_manager").hide();
+        $("#manager_home_content").hide();
+        $("#manager_products_content").hide();
+        $("#manager_pending_orders_content").show();
+    });
+});
+</script>
+
+<script>
+    showInfo();
+    setInterval(makeList, 3000);
+    function makeList() {
+        return $.ajax({
+            'url': "/manager/getOrders"
+        }).then(function(results) {
+            var loc = $('#scrollbar_content').scrollTop();
+
+            $("#order_list").empty();
+            if(results.length >= 1)
+            {
+                $("#order_list").append("<div id='scrollbar_content' class='panel-order-scrollbar'></div>");
+                $("#scrollbar_content").append("<div class='panel panel-default panel-order'><div id='panel_body' class='panel-body'></div></div>");
+                results.forEach(function(order, i) {
+                    $("#panel_body").append("<div class='row'><div class='col-md-1'><i style='margin-top: 35px;' class='fa fa-2x fa-random' aria-hidden='true'></i></div><div class='col-md-11'><div class='row'><div class='col-md-12'><div class='pull-right'><label class='label label-warning' style='margin-left: -60px;'><i class='fa fa-clock-o' aria-hidden='true'></i> Εκκρεμεί</label></div><span><i class='fa fa-user-circle-o' aria-hidden='true'></i><strong> " + order.firstName + " " + order.lastName + "</strong></span> <span class='label label-info' style='font-size: 10px;vertical-align: 3px;'><i class='fa fa-phone' aria-hidden='true'></i> " + order.phoneNumber + "</span><br><br><div><i class='fa fa-map-marker' aria-hidden='true'></i> " + order.address + "</div><div id='history" + i + "'" + "><br></div><div id='totalanddeliver" + i + "'" + "></div>");
+                        Object.values(order.cart.items).forEach(function(item) {
+                            $("#history" + i).append('<b>'+ item.qty + 'x</b> ' + item.item.name + ' ');
+                        });
+                    $("#totalanddeliver" + i).append("Σύνολο: " + order.cart.totalPrice + "€<br></div><div id='sumup' class='col-md-12'><img style='margin-bottom: -4px;' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDYxMiA2MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA2MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjI2Ljc2NCwzNzUuMzVjLTI4LjI0OSwwLTUxLjA3OCwyMi45MS01MS4wNzgsNTEuMTZjMCwyOC4xNjYsMjIuODI5LDUxLjA3OCw1MS4wNzgsNTEuMDc4czUxLjA3OC0yMi45MTIsNTEuMDc4LTUxLjA3OCAgICBDMjc3Ljg0MSwzOTguMjYsMjU1LjAxMywzNzUuMzUsMjI2Ljc2NCwzNzUuMzV6IE0yMjYuNzY0LDQ1Mi4wNDljLTE0LjEyNSwwLTI1LjU0LTExLjQ5OC0yNS41NC0yNS41NDEgICAgYzAtMTQuMTIzLDExLjQxNS0yNS41MzksMjUuNTQtMjUuNTM5YzE0LjEyNCwwLDI1LjUzOSwxMS40MTYsMjUuNTM5LDI1LjUzOUMyNTIuMzAyLDQ0MC41NTEsMjQwLjg4OCw0NTIuMDQ5LDIyNi43NjQsNDUyLjA0OXogICAgIE02MTIsMzM3LjU2MXY1NC41NDFjMCwxMy42MDUtMTEuMDI5LDI0LjYzNS0yNC42MzYsMjQuNjM1aC0yNi4zNmMtNC43NjMtMzIuNjg0LTMyLjkyOS01Ny44MTItNjYuOTI3LTU3LjgxMiAgICBjLTMzLjkxNCwwLTYyLjA4MiwyNS4xMjktNjYuODQ1LDU3LjgxMkgyOTMuNjI1Yy00Ljc2My0zMi42ODQtMzIuOTMtNTcuODEyLTY2Ljg0NS01Ny44MTJjLTMzLjkxNSwwLTYyLjA4MiwyNS4xMjktNjYuODQ0LDU3LjgxMiAgICBoLTMzLjAxMmMtMTMuNjA2LDAtMjQuNjM1LTExLjAyOS0yNC42MzUtMjQuNjM1di01NC41NDFINjEyTDYxMiwzMzcuNTYxeiBNNDk0LjE0MywzNzUuMzVjLTI4LjI0OSwwLTUxLjE2LDIyLjkxLTUxLjE2LDUxLjE2ICAgIGMwLDI4LjE2NiwyMi45MTIsNTEuMDc4LDUxLjE2LDUxLjA3OGMyOC4xNjYsMCw1MS4wNzctMjIuOTEyLDUxLjA3Ny01MS4wNzhDNTQ1LjIyLDM5OC4yNiw1MjIuMzA5LDM3NS4zNSw0OTQuMTQzLDM3NS4zNXogICAgIE00OTQuMTQzLDQ1Mi4wNDljLTE0LjEyNSwwLTI1LjUzOS0xMS40OTgtMjUuNTM5LTI1LjU0MWMwLTE0LjEyMywxMS40MTQtMjUuNTM5LDI1LjUzOS0yNS41MzkgICAgYzE0LjA0MiwwLDI1LjUzOSwxMS40MTYsMjUuNTM5LDI1LjUzOUM1MTkuNjgyLDQ0MC41NTEsNTA4LjE4NSw0NTIuMDQ5LDQ5NC4xNDMsNDUyLjA0OXogTTYwMi4yOTMsMjgyLjYzN2wtOTYuODE3LTk1Ljc1MSAgICBjLTYuMTU5LTYuMDc3LTE0LjQ1My05LjUyNi0yMy4wNzYtOS41MjZoLTQ4Ljg2di0xOC4zMTNjMC0xMy42MzEtMTEuMDA0LTI0LjYzNS0yNC42MzUtMjQuNjM1SDEyNi45MDcgICAgYy0xMy41NSwwLTI0LjYzNSwxMS4wMDUtMjQuNjM1LDI0LjYzNXYzLjg2TDIuMywxNzQuNDI5bDE3Ny4xNDYsMjMuMDY4TDAsMjE1LjMyM2wxNzguODE0LDI1LjQyM0wwLDI1Ni4yNWwxMDIuMjc4LDE5LjI5ICAgIGwtMC4wMDcsNDguNDAzaDUwOS43MTJ2LTE3Ljk4NUM2MTEuOTgzLDI5Ny4xNzEsNjA4LjQ1MiwyODguNzk2LDYwMi4yOTMsMjgyLjYzN3ogTTU2MC4wODQsMjg1LjgzOWgtOTMuNjk3ICAgIGMtMi4xMzUsMC0zLjg2LTEuNzI0LTMuODYtMy44NTl2LTcyLjM0N2MwLTIuMTM1LDEuNzI1LTMuODYsMy44Ni0zLjg2aDE3LjgyYzAuOTg1LDAsMS45NzEsMC40MTEsMi43MSwxLjA2OGw3NS43OTYsNzIuMzQ3ICAgIEM1NjUuMjU3LDI4MS41NjksNTYzLjUzMiwyODUuODM5LDU2MC4wODQsMjg1LjgzOXoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K' /> Εξυπηρετεί ο " + order.deliveryman.user.name + " " + order.deliveryman.user.surname + "</a></div></div></div></div>");
+                });
+
+            } else {
+                $("#order_list").append("<div class='panel panel-default'> <li style='border: 0' class='list-group-item'> Δεν υπάρχει ακόμα καμία εκκρεμής παραγγελία!</li></div>");
+            }
+
+             $('#scrollbar_content').scrollTop(loc);
+        });
+    }
+    function showInfo() {
+        return $.ajax({
+            'url': "/manager/getInfo"
+        }).then(function(results) {
+            if(results)
+            {
+                $("#tziros").html(results.revenue.toFixed(2) + "€");
+                $("#misthos").html(results.salary.toFixed(2) + "€");
+            } else {
+                console.log("Can not retrieve manager's info right now!");
+            }
+        });
+    }
+</script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

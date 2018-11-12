@@ -1,0 +1,57 @@
+<% include partials/header_index %>
+
+<% if (error.length) { %>
+    <div class="flash">
+        <div class="alert alert-danger" role="alert"> <%= error %> </div>
+    </div>
+<% } else if (success.length) { %>
+    <div class="flash">
+        <div class="alert alert-success" role="alert"> <%= success %> </div>
+    </div>
+<% } else { %>
+         <div class="preloader">
+    			<div class="inner">
+    				<div class="logo_loader"><img src="https://i.imgur.com/sM6wUkE.png"></div>
+    				<div class="item item1"></div>
+    				<div class="item item2"></div>
+    				<div class="item item3"></div>
+    				<div class="item item4"></div>
+    				<div class="item item5"></div>
+    			</div>
+    		</div>
+<% } %>
+  
+  <header class="jumbotron">
+    <div>
+      <h1>Καλωσήρθατε στο CoffeeParadiso</h1>
+        <p><span id="stores_number">10</span> καταστήματα στην Πάτρα έτοιμα να σας εξυπηρετήσουν!</p>
+      <a href="/menu" tabindex="1" class="btn btn-lg button-color">Κατάλογος</a>
+    </div>
+  </header>
+    
+  <ul class="slideshow">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function showInfo() {
+        return $.ajax({
+            'url': "/getStoresNumber"
+        }).then(function(results) {
+            if(results)
+            {
+                $("#stores_number").html(results.number);
+            } else {
+                console.log("Can not retrieve Stores number right now!");
+            }
+        });
+    }
+    showInfo();
+</script>
+
+<% include partials/footer %>

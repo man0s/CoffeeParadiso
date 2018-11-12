@@ -1,0 +1,368 @@
+<% include partials/header_panel %>
+
+<div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						Πίνακας Ελέγχου
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active admin_home">
+							<a href="#"><i class="fa fa-dashboard "></i>Αρχική </a>
+						</li>
+						<li class="admin_products">
+							<a href="#"><i class="fa fa-shopping-bag "></i>Προϊόντα </a>
+						</li>
+						<li class="admin_delivery">
+							<a href="#"><i class="fa fa-archive "></i>Διανομείς </a>
+						</li>
+						<li class="admin_stores">
+							<a href="#"><i class="glyphicon glyphicon-home"></i>Καταστήματα </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+		<div class="col-md-9">
+		    <% if (error.length) { %>
+                <div>
+                    <div class="alert alert-danger" role="alert"> <%= error %> </div>
+                </div>
+            <% } else if (success.length) { %>
+                <div>
+                    <div class="alert alert-success" role="alert"> <%= success %> </div>
+                </div>
+            <% } %>
+            <div class="profile-content">
+			   <div id="admin_home_content">
+                   <h2>Αρχική</h2>
+                   <hr>
+                   <div class="col-md-6" style="height: 50px; margin-top: 25px;">
+                       <label for="month">Μήνας:</label>
+                       <select class="selectpicker" id="month">
+                           <option value='1'>Ιανουάριος</option>
+                           <option value='2'>Φεβρουάριος</option>
+                           <option value='3'>Μάρτιος</option>
+                           <option value='4'>Απρίλης</option>
+                           <option value='5'>Μάιος</option>
+                           <option value='6'>Ιούνιος</option>
+                           <option value='7'>Ιούλιος</option>
+                           <option value='8'>Αύγουστος</option>
+                           <option selected value='9'>Σεπτέμβριος</option>
+                           <option value='10'>Οκτώβριος</option>
+                           <option value='11'>Νοέμβριος</option>
+                           <option value='12'>Δεκέμβριος</option>
+                       </select>
+                   </div>
+                   <div class="col-md-6" style="height: 50px; margin-top: 25px;">
+                       <label for="year">Έτος:</label>
+                       <select class="selectpicker" id="year">
+                           <option selected value='2018'>2018</option>
+                           <option value='2019'>2019</option>
+                           <option value='2020'>2020</option>
+                           <option value='2021'>2021</option>
+                       </select>
+                   </div>
+                   <div class="col-md-12" id="download">
+                       <hr>
+                       <a class="btn btn-md button-color" href="/admin/getXML/9/2018"><i class="fa fa-download" aria-hidden="true"></i> XML</a>
+                   </div>
+			   </div>
+			   <div id="admin_products_content">
+			       <h2>Προσθήκη Νέου Προϊόντος</h2>
+			       <hr>
+			       <form action="/admin/addproduct" method="POST">
+                    <div class="col-md-6 address_margin">
+                        <label for="name">Όνομα</label>
+                        <input type="text" class="form-control" name="name" placeholder="Όνομα Προϊόντος" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="type">Τύπος</label>
+                          <select class="form-control" name="type" required>
+                            <option value="drink">Καφές</option>
+                            <option value="food">Φαγητό</option>
+                          </select>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="price">Τιμή</label>
+                        <input type="text" class="form-control" name="price" placeholder="Τιμή Προϊόντος" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="image">URL Εικόνας</label>
+                        <input type="text" class="form-control" name="image" placeholder="URL Εικόνας Προϊόντος" value="" required>
+                      </div>
+                      <div class="col-md-12 address_margin">
+                        <label for="desc">Περιγραφή</label>
+                        <textarea rows="4" class="form-control" name="desc" placeholder="Περιγραφή Προϊόντος" value="" required></textarea>
+                      </div>
+                      <button class="btn btn-primary btn-lg btn-block btn_complete" type="submit">Προσθήκη Προϊόντος</button>
+             </form>
+			   </div>
+			   <div id="admin_stores_content">
+                <h2>Προσθήκη Νέου Καταστήματος</h2>
+                <hr>
+                <form action="/admin/addstore" method="POST">
+                    <div class="col-md-6 address_margin">
+                        <label for="name">Όνομα</label>
+                        <input type="text" class="form-control" name="name" placeholder="Όνομα Καταστήματος" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="telephone">Τηλέφωνο</label>
+                        <input type="text" class="form-control" name="telephone" minlength="9" placeholder="Τηλέφωνο Καταστήματος" value="" required>
+                      </div>
+                      <br>
+                    <div class="form-group address_margin">
+                      <label for="address">Διεύθυνση</label>
+                      <input type="text" class="form-control" name="address" id="location_input" maxlength="100" placeholder="Οδός & Αριθμός Καταστήματος" required>
+                      <input type="hidden" class="form-control" name="latitude">
+                      <input type="hidden" class="form-control" name="longitude">
+                      <div id="map_check"></div>
+                    </div>
+                    <h3>Προσθήκη Υπευθύνου Καταστήματος</h3>
+                    <hr>
+                    <div class="col-md-6 address_margin">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Username Υπευθύνου Καταστήματος" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" minlength="5" placeholder="Κωδικός Υπευθύνου Καταστήματος" value="" required>
+                     </div>
+                     <div class="col-md-6 address_margin">
+                        <label for="firstName">Όνομα</label>
+                        <input type="text" class="form-control" name="firstName" placeholder="Όνομα Υπευθύνου Καταστήματος" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="lastName">Επώνυμο</label>
+                        <input type="text" class="form-control" name="lastName" placeholder="Επώνυμο Υπευθύνου Καταστήματος" value="" required>
+                     </div>
+                     <div class="col-md-6 address_margin">
+                        <label for="afm">ΑΦΜ</label>
+                        <input type="text" class="form-control" name="afm" minlength="10" maxlength="10" placeholder="ΑΦΜ Υπευθύνου Καταστήματος" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="amka">ΑΜΚΑ</label>
+                        <input type="text" class="form-control" name="amka" minlength="11" maxlength="11" placeholder="ΑΜΚΑ Υπευθύνου Καταστήματος" value="" required>
+                     </div>
+                     <div class="col-md-12 form-group">
+                        <label for="iban">IBAN</label>
+                        <input type="text" class="form-control" name="iban" minlength="27" maxlength="27" placeholder="IBAN Υπευθύνου Καταστήματος" value="" required>
+                      </div>
+                    <button class="btn btn-primary btn-lg btn-block btn_complete" type="submit">Προσθήκη Καταστήματος</button>
+                </form>
+            </div>
+            <div id="admin_delivery_content">
+                <h2>Προσθήκη Νέου Διανομέα</h2>
+                <hr>
+                <form action="/admin/adddelivery" method="POST">
+                    <div class="col-md-6 address_margin">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Username Διανομέα" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" minlength="5" placeholder="Κωδικός Διανομέα" value="" required>
+                     </div>
+                     <div class="col-md-6 address_margin">
+                        <label for="firstName">Όνομα</label>
+                        <input type="text" class="form-control" name="firstName" placeholder="Όνομα Διανομέα" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="lastName">Επώνυμο</label>
+                        <input type="text" class="form-control" name="lastName" placeholder="Επώνυμο Διανομέα" value="" required>
+                     </div>
+                     <div class="col-md-6 address_margin">
+                        <label for="afm">ΑΦΜ</label>
+                        <input type="text" class="form-control" name="afm" minlength="10" maxlength="10" placeholder="ΑΦΜ Διανομέα" value="" required>
+                      </div>
+                      <div class="col-md-6 address_margin">
+                        <label for="amka">ΑΜΚΑ</label>
+                        <input type="text" class="form-control" name="amka" minlength="11" maxlength="11" placeholder="ΑΜΚΑ Διανομέα" value="" required>
+                     </div>
+                     <div class="col-md-12 form-group">
+                        <label for="iban">IBAN</label>
+                        <input type="text" class="form-control" name="iban" minlength="27" maxlength="27" placeholder="IBAN Διανομέα" value="" required>
+                      </div>
+                    <button class="btn btn-primary btn-lg btn-block btn_complete" type="submit">Προσθήκη Διανομέα</button>
+                </form>
+            </div>
+          </div>
+		</div>
+	</div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#admin_home_content").show();
+    $("#admin_products_content").hide();
+    $("#admin_stores_content").hide();
+    $("#admin_delivery_content").hide();
+    
+    $(".admin_home").click(function(){
+        $(".admin_stores").removeClass( "active" );
+        $(".admin_products").removeClass( "active" );
+        $(".admin_delivery").removeClass( "active" );
+        $(".admin_home").addClass( "active" );
+        $("#admin_stores_content").hide();
+        $("#admin_products_content").hide();
+        $("#admin_delivery_content").hide();
+        $("#admin_home_content").show();
+    });
+    
+     $(".admin_products").click(function(){
+        $(".admin_home").removeClass( "active" );
+        $(".admin_stores").removeClass( "active" );
+        $(".admin_delivery").removeClass( "active" );
+        $(".admin_products").addClass( "active" );
+        $("#admin_home_content").hide();
+        $("#admin_stores_content").hide();
+        $("#admin_delivery_content").hide();
+        $("#admin_products_content").show();
+    });
+    
+    $(".admin_stores").click(function(){
+        $(".admin_home").removeClass( "active" );
+        $(".admin_products").removeClass( "active" );
+        $(".admin_delivery").removeClass( "active" );
+        $(".admin_stores").addClass( "active" );
+        $("#admin_home_content").hide();
+        $("#admin_products_content").hide();
+        $("#admin_delivery_content").hide();
+        $("#admin_stores_content").show();
+    });
+    
+    $(".admin_delivery").click(function(){
+        $(".admin_home").removeClass( "active" );
+        $(".admin_products").removeClass( "active" );
+        $(".admin_stores").removeClass( "active" );
+        $(".admin_delivery").addClass( "active" );
+        $("#admin_home_content").hide();
+        $("#admin_products_content").hide();
+        $("#admin_stores_content").hide();
+        $("#admin_delivery_content").show();
+    });
+});
+</script>
+
+<script>
+    $('#month').on('change', function() {
+        var year = $("#year").val();
+        $("#download").html("<hr><a class='btn btn-md button-color' id='download' href='/admin/getXML/" + this.value + "/" + year + "'><i class='fa fa-download' aria-hidden='true'></i> XML</a>");
+    });
+    $('#year').on('change', function() {
+        var month = $("#month").val();
+        $("#download").html("<hr><a class='btn btn-md button-color' id='download' href='/admin/getXML/" + month + "/" + this.value + "'><i class='fa fa-download' aria-hidden='true'></i> XML</a>");
+    });
+</script>
+
+<script>
+//========================================
+//           autoComplete Map
+//========================================
+// Initialize and add the map
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map_check'), {
+      center: {
+        lat: 38.2467692,
+        lng: 21.7226867
+      },
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+              disableDefaultUI: true
+    });
+    var input = /** @type {!HTMLInputElement} */ (
+      document.getElementById('location_input'));
+  
+    var types = document.getElementById('type-selector');
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+  
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+  
+    var infowindow = new google.maps.InfoWindow();
+    var marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      draggable: true
+    });
+    google.maps.event.addListener(marker, 'dragend', function() {
+      
+      document.getElementsByName('latitude')[0].value = marker.getPosition().lat();
+      document.getElementsByName('longitude')[0].value = marker.getPosition().lng();
+       
+       infowindow.setContent('<i class="fa fa-map-marker"></i> <strong>' + "Νέα τοποθεσία" + '</strong><br>' + marker.getPosition().lat().toFixed(6) + ", " + marker.getPosition().lng().toFixed(6));
+       infowindow.open(map, marker);
+    })
+  
+    autocomplete.addListener('place_changed', function() {
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+      }
+  
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17);
+      }
+      marker.setIcon( ({
+        url: 'https://i.imgur.com/6GbZQDT.png',
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(35, 35)
+      }));
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+  
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+  
+      var latitude = place.geometry.location.lat();
+      var longitude = place.geometry.location.lng();
+      
+      document.getElementsByName('latitude')[0].value = latitude;
+      document.getElementsByName('longitude')[0].value = longitude;
+  
+  
+      infowindow.setContent('<div><i class="fa fa-map-marker"></i> <strong>' + place.name + '</strong><br>' + address);
+      infowindow.open(map, marker);
+    });
+  
+  }
+</script>
+
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoWKJrVl9P97JSP3cfqswCGsfrgS5ve2Q&libraries=places&callback=initMap"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

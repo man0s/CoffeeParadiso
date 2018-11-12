@@ -1,0 +1,75 @@
+<!-- Modal -->
+<div id="kalathi" class="modal right fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close cart-close cart-close-margin" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Το καλάθι μου</h4>
+            </div>
+            <div class="modal-body">
+                <% if(session.cart && session.cart.totalQty) { %>
+                    <div class="modal-body-scroll scrollbar">
+                    <div class="modal-body-body"> 
+                    <ul class="list-group">
+                        <% cartItems.forEach(function(product){ %>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-3 cartItemCol"> <img src="<%= product.item.image %>" alt="..." class="img-responsive"></div>
+                                    <div class="col-xs-9 cartItemCol">
+                                        <div class="row cart-row">
+                                            <div class="col-xs-10" style="padding-left: 0px">
+                                                <span style="font-weight: bold;"><%= product.item.name %></span>
+                                            </div>
+                                            <div class="col-xs-2" style="padding-left: 0px">
+                                                <a href="/cart/remove/<%= product.item._id %>" class="cartItemClose">&times;</a>
+                                            </div>
+                                        </div>
+                                        <div class="row cart-row">
+                                            <div class="col-xs-2" style="padding-left: 0px">
+                                            </div>
+                                            <div class="col-xs-6 cartItemQty" style="padding-left: 0px">
+                                                <a href="/cart/reduce/<%= product.item._id %>"><i class="fa fa-minus btn-qty-cart" aria-hidden="true"></i></a>
+                                                <span style="color: #232323;"><%= product.qty %></span>
+                                                <a href="/cart/add/<%= product.item._id %>/1/true"><i class="fa fa-plus btn-qty-cart" aria-hidden="true"></i></a>
+                                            </div>
+                                            <!--<div class="col-xs-1" style="padding-left: 0px" >-->
+                                            <!--</div>-->
+                                            <div class="col-xs-4" style="padding-left: 0px">
+                                                <span class="label label-success"><%= product.price %>€</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <% }); %>
+                    </ul>
+                    </div>
+                    </div>
+                    <div class="fullprice text-center">
+                        <div class="row">
+                        <hr>
+                        <div class="col-sm-6 col-xs-6 text-center">
+                            <div>Σύνολο: <strong><%= session.cart.totalPrice %>€</strong></div>
+                        </div>
+                        <div class="col-sm-6 col-xs-6" text-center>
+                            <a tabindex="1" href="/cart/checkout" class="btn btn-md cart-button-style pull-right">Συνέχεια <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                        </div>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <div class="cartEmptyBody">
+                            <div id="cutleryIcon"><i class="fa fa-cutlery" aria-hidden="true"></i></div>
+                            <div style="margin: 10px 0 10px 0;">
+                                Το καλάθι σου είναι άδειο.
+                            </div>
+                            <a tabindex="1" href="/menu" type="button" class="btn button-color">Κατάλογος</a>
+                        </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>

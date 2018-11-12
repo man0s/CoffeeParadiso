@@ -1,0 +1,63 @@
+<div class="navigation">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="collapsed" style="float: right">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <a class="navbar-brand" href="/"><img src="/assets/img/logo.png" alt="CoffeeParadiso"></a>
+      </div>
+      <div id="navigation" class="navbar-collapse collapse text-center">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="vertical-rule-right"><a href="/stores">ΚΑΤΑΣΤΗΜΑΤΑ</a></li>
+          <!--<li><a href="#" data-toggle="modal" data-target="#myModal">ΕΙΣΟΔΟΣ / ΕΓΓΡΑΦΗ</a></li>-->
+          <% if(!currentUser){ %>
+          <li><a href="#" class="modal">ΕΙΣΟΔΟΣ / ΕΓΓΡΑΦΗ</a></li>
+          <% }else{ %>
+          <!--<li><a href="/logout" class="vertical-rule">ΑΠΟΣΥΝΔΕΣΗ</a></li>-->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+              <%= currentUser.username.match(/^([^@]*)@/)[1].toUpperCase(); %><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <% if(currentUser.type != "customer") { %>
+              <% if(currentUser.type == "manager") { %>
+              <li><a href="/manager"><i class="fa fa-gear" aria-hidden="true"></i> Πίνακας Ελέγχου</a></li>
+              <% } else if(currentUser.type == "deliveryman") { %>
+              <li><a href="/deliveryman"><i class="fa fa-gear" aria-hidden="true"></i> Πίνακας Ελέγχου</a></li>
+              <% } else { %>
+              <li><a href="/admin"><i class="fa fa-gear" aria-hidden="true"></i> Πίνακας Ελέγχου</a></li>
+              <% } %>
+              <% } else { %>
+              <li><a href="/menu"><i class="fa fa-coffee" aria-hidden="true"></i> Κατάλογος</a></li>
+              <li><a href="/history"><i class="fa fa-truck" aria-hidden="true"></i> Οι παραγγελίες μου</a></li>
+              <% } %>
+              <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Αποσύνδεση</a></li>
+            </ul>
+          </li>
+          <% } %>
+          <li class="vertical-rule-left">
+            <a href="#kalathi" data-toggle="modal" data-target="#kalathi">
+              <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+              <div>
+              <span class="cart_value">
+                <% if(session.cart){ %>
+                <%= session.cart.totalQty %>
+                <% } else { %> 0 <% } %>
+              </span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+  </nav>
+</div>
+
+<% include login_modal %>

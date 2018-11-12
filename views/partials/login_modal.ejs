@@ -1,0 +1,50 @@
+<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
+	<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+		<ul class="cd-switcher">
+			<li><a href="" class="modal_option">ΕΙΣΟΔΟΣ</a></li>
+			<li><a href="" class="modal_option">ΕΓΓΡΑΦΗ</a></li>
+		</ul>
+
+		<div id="cd-login"> <!-- log in form -->
+			<form class="cd-form" action="/login" method="POST">
+				<input type='hidden' name='ref_path' value='<%=ref_path%>'>
+				<p class="fieldset">
+					<label class="image-replace cd-email" for="signin-email">Email</label>
+					<input class="full-width has-padding has-border" id="signin-email" type="email" name="username" placeholder="Email">
+				</p>
+
+				<p class="fieldset">
+					<label class="image-replace cd-password" for="signin-password">Κωδικός</label>
+					<input class="full-width has-padding has-border" id="signin-password" type="password" name="password" placeholder="Κωδικός">
+					<a href="#0" class="hide-password">Show</a>
+				</p>
+				<p class="fieldset">
+					<input class="full-width" type="submit" value="ΕΙΣΟΔΟΣ">
+				</p>
+			</form>
+		</div> <!-- cd-login -->
+
+		<div id="cd-signup"> <!-- sign up form -->
+			<form class="cd-form" action="/register" method="POST">
+				<input type='hidden' name='ref_path' value='<%=ref_path%>'>
+				<p class="fieldset">
+					<label class="image-replace cd-email" for="signup-email">Email</label>
+					<input class="full-width has-padding has-border" id="signup-email" type="email" name="username" placeholder="Email" required>
+				</p>
+				<p class="fieldset">
+					<label class="image-replace cd-password" for="signup-password">Κωδικός</label>
+					<input class="full-width has-padding has-border" id="signup-password" type="password" name="password" minLength="5" placeholder="Κωδικός" required>
+					<a href="#0" class="hide-password">Show</a>
+				</p>
+				<p class="fieldset">
+					<label class="image-replace cd-username" for="signup-username">Τηλέφωνο</label>
+					<input class="full-width has-padding has-border" id="signup-username" type="text" name="phoneNumber" minLength="9" placeholder="Τηλέφωνο" required>
+				</p>
+				<p class="fieldset">
+					<input class="full-width has-padding" type="submit" value="ΣΥΝΕΧΕΙΑ">
+				</p>
+			</form>
+		</div> <!-- cd-signup -->
+		<a href="#0" class="cd-close-form">Close</a>
+	</div> <!-- cd-user-modal-container -->
+</div> <!-- cd-user-modal -->

@@ -1,0 +1,46 @@
+Cart Modal Close(X) Fix.                                               ‎DONE ✔‎
+Cart Modal JS when opens on mobile/navbar shitting again.              ‎DONE ✔‎
+Navbar's Καταστήματα responsivness and hr when on mobile/tablet.       ‎DONE ✔‎
+Add Phone in Register Modal.                                           ‎DONE ✔‎
+Add Logout button.                                                     ‎DONE ✔‎
+You fucked up menu_modals, fix them like i had them.                   ‎DONE ✔‎
+Add Passport w/ user table(email, mobile, password).                   ‎DONE ✔‎
+Fix Cart/Basket Mobile Reponsivness(padding and width).                ‎DONE ✔‎
+Delete products and reconstruct as one schema.                         ‎DONE ✔‎
+Session vars w/ passport, cart/basket sync and REDIRECT DAT.           ‎DONE ✔‎
+Add Phone Icon in Login Modal.                                         ‎DONE ✔‎
+Fix MenuModal cursor.                                                  ‎DONE ✔‎
+Style cart and RESOLVE THE FUCKING OVERFLOW issue.                     ‎DONE ✔‎
+Missing /cart/remove/:id baaaaakaaaa man0s(x button on cart).          ‎DONE ✔‎
+...also /cart/reduce/:id...                                            ‎DONE ✔‎
+Fix the correct shown of empty card when we removed an item.           ‎DONE ✔‎
+Fix the 'undefined' errors when we remove a removed item.              ‎DONE ✔‎
+Fix the Cart currency wrong format.                                    ‎DONE ✔‎
+Fix unexpected bug when closing cart modal.                            ‎DONE ✔‎
+Fix the center of the menu items/boxes and the href of them.           ‎DONE ✔‎
+Manager/ Deliveryman register/login.                                   ‎DONE ✔‎
+Fix Manager login authentication.                                      ‎DONE ✔‎
+Stores                                                                 ‎DONE ✔‎
+Order history.                                                         ‎DONE ✔‎
+Navbar Control Panel foreach.                                          ‎DONE ✔‎
+Admin back-end construction.                                           ‎DONE ✔‎
+Login/type NodeJS check.                                               ‎DONE ✔‎
+POST EXPLOIT FIX                                                       ‎DONE ✔‎
+Cart checkout and refactoring cart modal.                              ‎DONE ✔‎
+Google Map's API.                                                      ‎DONE ✔‎
+Construct the full database.                                           ‎DONE ✔‎
+Manager page.                                                          ‎DONE ✔‎
+Deliveryman page.                                                      ‎DONE ✔‎
+Admin XML-file.                                                        ‎DONE ✔‎
+GET requests info.                                                     ‎DONE ✔‎
+Welcome,error messages w/ express-flash.                               ‎DONE ✔‎
+/* get                                                                 ‎DONE ✔‎
+outline: none !important; in ALL buttons and color for active,focus.   ‎DONE ✔‎
+Refactor EJS's, CSS's, JS's and app.js.                                ‎DONE ✔‎
+New store default products all.                                        ‎DONE ✔‎
+Change basket name(#Modal2).                                           ‎DONE ✔‎
+seedDB.                                                                ‎DONE ✔‎
+
+Refactor the hardcore setInterval in app.js / mobile scrolling.    ‎NOT DONE ✘‎
+Cookies for fun :).                                                ‎NOT DONE ✘‎
+Refactor login modal w/ bootstrap modal classes.                   ‎NOT DONE ✘‎
