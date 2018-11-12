@@ -1,6 +1,6 @@
 # CoffeeParadiso
 <p align="center">
-   <img src="https://raw.githubusercontent.com/man0s/CoffeeParadiso/master/Screenshot.png">
+   <img src="https://i.imgur.com/XtRxNlR.jpg">
 </p>
 <br>
 <i>
