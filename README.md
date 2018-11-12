@@ -25,4 +25,4 @@ Check [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
 ## License
 
-[MIT](LICENSE)© <a href="https://github.com/man0s">Emmanouil Katefidis</a> & <a href="https://github.com/Pan0sSt">Panagiotis Stavrinakis</a>
+[Apache license 2.0](LICENSE)© <a href="https://github.com/man0s">Emmanouil Katefidis</a> & <a href="https://github.com/Pan0sSt">Panagiotis Stavrinakis</a>
