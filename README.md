@@ -1,4 +1,4 @@
-# CoffeeParadiso
+# CoffeeParadiso [![Build Status](https://travis-ci.com/man0s/CoffeeParadiso.svg?branch=master)](https://travis-ci.com/man0s/CoffeeParadiso)
 <p align="center">
    <img src="https://i.imgur.com/XtRxNlR.jpg">
 </p>
