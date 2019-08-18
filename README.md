@@ -11,7 +11,7 @@
 </p>
 </i>
 <br>
-<p align="center">You can check it out <a href="https://man0s-movie.herokuapp.com/">here</a>.</p>
+<p align="center">You can check it out <a href="https://man0s-coffeeparadiso.herokuapp.com/">here</a>.</p>
 
 ## Getting Started
 
