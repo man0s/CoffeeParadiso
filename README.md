@@ -1,4 +1,6 @@
-# CoffeeParadiso [![Build Status](https://travis-ci.com/man0s/CoffeeParadiso.svg?branch=master)](https://travis-ci.com/man0s/CoffeeParadiso)
+# CoffeeParadiso
+[![Build Status](https://travis-ci.com/man0s/CoffeeParadiso.svg?branch=master)](https://travis-ci.com/man0s/CoffeeParadiso)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](https://man0s-coffeeparadiso.herokuapp.com/)
 <p align="center">
    <img src="https://i.imgur.com/XtRxNlR.jpg">
 </p>
@@ -8,6 +10,8 @@
   Management and delivery system for food and coffee based in NodeJS, ExpressJS and MongoDB.
 </p>
 </i>
+<br>
+<p align="center">You can check it out <a href="https://man0s-movie.herokuapp.com/">here</a>.</p>
 
 ## Getting Started
 
