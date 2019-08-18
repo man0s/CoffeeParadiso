@@ -26,7 +26,7 @@ var indexRoutes    = require("./routes/indexRoutes"),
 // ===========
 //   MongoDB
 // ===========
-mongoose.connect("MONGO DB URI", { useMongoClient: true });
+mongoose.connect("mongodb://root:webproj18@ds259111.mlab.com:59111/coffeeparadiso", { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 // seedDB(); //seed the db
