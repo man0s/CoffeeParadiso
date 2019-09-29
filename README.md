@@ -1,6 +1,5 @@
 # CoffeeParadiso
 [![Build Status](https://travis-ci.com/man0s/CoffeeParadiso.svg?branch=master)](https://travis-ci.com/man0s/CoffeeParadiso)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](https://man0s-coffeeparadiso.herokuapp.com/)
 <p align="center">
    <img src="https://i.imgur.com/XtRxNlR.jpg">
 </p>
