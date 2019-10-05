@@ -12,7 +12,7 @@ var express = require("express"),
 // ====================================
 //  Google-distance-matrix's API key.
 // ====================================
-distance.key('AIzaSyDoWKJrVl9P97JSP3cfqswCGsfrgS5ve2Q');
+distance.key('YOUR API KEY');
 
 // ========================================================================================
 //  Customer's history GET request w/ middleware checking if there is a logged in user.
