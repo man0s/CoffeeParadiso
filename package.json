@@ -32,7 +32,7 @@
     "express-session": "^1.15.6",
     "express-validator": "^5.2.0",
     "google-distance-matrix": "^1.1.1",
-    "mongoose": "^4.13.7",
+    "mongoose": "^5.7.7",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
