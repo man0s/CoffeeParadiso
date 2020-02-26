@@ -1,4 +1,4 @@
-# CoffeeParadiso
+# ☕ CoffeeParadiso
 [![Build Status](https://travis-ci.com/man0s/CoffeeParadiso.svg?branch=master)](https://travis-ci.com/man0s/CoffeeParadiso)
 <p align="center">
    <img src="https://i.imgur.com/XtRxNlR.jpg">
@@ -6,7 +6,7 @@
 <br>
 <i>
 <p align="center">
-  Management and delivery system for food and coffee based in NodeJS, ExpressJS and MongoDB.
+ Management and delivery system for food and coffee based in NodeJS, ExpressJS and MongoDB.
 </p>
 </i>
 <br>
